@@ -96,13 +96,17 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             }
         }
         div.setOnClickListener { addSimvol(div.text.toString())
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)}
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)
+            isPoint = true}
         multiply.setOnClickListener { addSimvol(multiply.text.toString())
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)}
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)
+            isPoint = true}
         plus.setOnClickListener { addSimvol(plus.text.toString())
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)}
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)
+            isPoint = true}
         minus.setOnClickListener { addSimvol(minus.text.toString())
-            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)}
+            result.setTextSize(TypedValue.COMPLEX_UNIT_SP,50f)
+            isPoint = true}
         equal.setOnClickListener {
             result.setTextSize(TypedValue.COMPLEX_UNIT_SP,70f)
             if(result.text.length > 9){
