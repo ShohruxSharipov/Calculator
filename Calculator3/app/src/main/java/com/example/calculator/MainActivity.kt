@@ -155,16 +155,38 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         while (list.contains('/') || list.contains('x')) {
 
             if (list[i] == 'x' || list[i] == '/') {
-                var old = list[i - 1] as Float
-                var next = list[i + 1] as Float
+                var old = list[i - 1].toString().toFloat()
+                var key = list[i + 1].toString().toFloat()
                 var amal = list[i]
                 var res = 0f
                 when (amal) {
                     '/' -> {
-                        res = old / next
+                        res = old / key
                     }
                     'x' -> {
-                        res = old * next
+                        res = old * key
+                    }
+                }
+                list.set(i-1,res)
+                list.removeAt(i)
+                list.removeAt(i)
+                i = i-2
+            }
+            i++
+        }
+        while (list.contains('-') || list.contains('+')) {
+
+            if (list[i] == '-' || list[i] == '+') {
+                var old = list[i - 1].toString().toFloat()
+                var key = list[i + 1].toString().toFloat()
+                var amal = list[i]
+                var res = 0f
+                when (amal) {
+                    '+' -> {
+                        res = old + key
+                    }
+                    '-' -> {
+                        res = old - key
                     }
                 }
                 list.set(i-1,res)
