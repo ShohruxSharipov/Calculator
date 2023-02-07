@@ -181,10 +181,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                         // 56+5
                         var count = 0
                         for (i in index + 1..operand.text.length - 1) {
-                            val stringbuilder = StringBuilder(operand.text)
                             num += operand.text[i].toString()
-                            
-
                         }
                     }
                     operand.text = operand.text.toString() + "("
