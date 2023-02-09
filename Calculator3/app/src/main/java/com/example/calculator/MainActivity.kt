@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private var isPoint = true
     private var isSimvol = false
-    private var isEqual = false
+    private var isClicked = false
 
     fun initUI() {
         one = findViewById(R.id.bir)
@@ -163,40 +163,48 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         plusminus.setOnClickListener {
             var index = operand.text.length - 1
             var num = ""
-            for (i in (operand.text.length - 1).downTo(0)) {
+            if (!isClicked) {
+                for (i in (operand.text.length - 1).downTo(0)) {
 
-                if (operand.text[i].isDigit() && index != 0) {
-                    index = i - 1
-                } else {
-                    Log.d("TAG", "onCreate: " + operand.text + " num: $num"+"  index: $index")
-                    if (index == 0) {
-                        num += operand.text
-                        operand.text = ""
-
+                    if (operand.text[i].isDigit() && index != 0) {
+                        index = i - 1
                     } else {
-                        // index + 1 = 3
-                        // 3 dan 4
-                        //6
-                        // 56+65
-                        // 56+5
-                        var count = 0
-                        for (i in index + 1..operand.text.length - 1) {
-                            num += operand.text[i].toString()
+                        if (index == 0) {
+                            num += operand.text
+
+                        } else {
+                            var count = 0
+                            for (i in index + 1..operand.text.length - 1) {
+                                num += operand.text[i].toString()
+                            }
                         }
+
+
+                        operand.text = operand.text.dropLast(num.length)
+                        operand.text = operand.text.toString() + "("
+                        operand.text = operand.text.toString() + (num.toInt() * (-1)).toString()
+                        operand.text = operand.text.toString() + ")"
+                        break
                     }
-                    operand.text = operand.text.toString() + "("
-                    operand.text = operand.text.toString() + (num.toInt() * (-1)).toString()
-                    operand.text = operand.text.toString() + ")"
-                    break
-                }
 //                Log.d("TAG", "onCreate: " + operand.text + " num: $num"+"  index: $index")
+                }
+                isClicked = true
+            } else {
+                isClicked = false
+                var i = operand.text.length - 1
+                while (operand.text[i] != '(') {
+                    if (operand.text[i].isDigit()) {
+                        num += operand.text[i]
+                    }
+                    i--
+                }
+                operand.text = operand.text.dropLast(num.length + 3)
+                operand.text = operand.text.toString() + num.reversed()
             }
-
-
+//            calculate()
         }
 
     }
-
 
 
     private fun calculate(): String {
@@ -213,15 +221,30 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         var list = mutableListOf<Any>()
         var temp = ""
         for (i in s) {
+
             if (i.isDigit() || i == '.') {
                 temp += i
             } else if (i == '(') {
-                var temp2 = 0
-                for (j in i..')') {
-                    temp += j
+                var num = ""
+                var j = 0
+                while (operand.text[j] != '(') {
+                    j++
                 }
-                temp2 *= -1
-                list.add(temp2.toString())
+                operand.text.drop(j)
+                j--
+                Log.d("TAG", "createArr: "+j)
+                while (operand.text[j] != ')') {
+                    if (operand.text[j].isDigit()) {
+                        num += operand.text[j]
+                    } else {
+                        operand.text.drop(j)
+                        j--
+                    }
+                    j++
+                }
+                num = (num.toInt() * (-1)).toString()
+                operand.text.drop(j)
+                list.add(num.toString())
             } else {
                 list.add(temp)
                 temp = ""
