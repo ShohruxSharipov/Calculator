@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 operand.text = operand.text.dropLast(num.length + 3)
                 operand.text = operand.text.toString() + num.reversed()
             }
-//            calculate()
+            calculate()
         }
 
     }
@@ -220,36 +220,49 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private fun createArr(s: String): MutableList<Any> {
         var list = mutableListOf<Any>()
         var temp = ""
-        for (i in s) {
-
-            if (i.isDigit() || i == '.') {
-                temp += i
-            } else if (i == '(') {
+        var c = 0
+        var i = 0
+//        for (i in s) {
+//            c++
+//            if (i.isDigit() || i == '.') {
+//                temp += i
+//            } else if (i == '(') {
+//                var num = ""
+//                var C = c+2
+//                var j = 0
+//                while (operand.text[j] != ')') {
+//                    num += operand.text[c++]
+//                    j++
+//                }
+//                num=num.dropLast(1)
+//                Log.d("TAG", "createArr: "+num)
+//            } else {
+//                list.add(temp)
+//                temp = ""
+//                list.add(i)
+//            }
+//        }
+        while (i != s.length-1){
+            if (operand.text[i].isDigit() || operand.text[i] == '.') {
+                temp += operand.text[i]}
+            else if (operand.text[i] == '(') {
+                list.add(temp)
+                temp = ""
                 var num = ""
+                i += 2
                 var j = 0
-                while (operand.text[j] != '(') {
-                    j++
-                }
-                operand.text.drop(j)
-                j--
-                Log.d("TAG", "createArr: "+j)
                 while (operand.text[j] != ')') {
-                    if (operand.text[j].isDigit()) {
-                        num += operand.text[j]
-                    } else {
-                        operand.text.drop(j)
-                        j--
-                    }
+                    temp += operand.text[i++]
                     j++
                 }
-                num = (num.toInt() * (-1)).toString()
-                operand.text.drop(j)
-                list.add(num.toString())
+                num=num.dropLast(1)
+                Log.d("TAG", "createArr: "+num)
             } else {
                 list.add(temp)
                 temp = ""
-                list.add(i)
+                list.add(operand.text[i])
             }
+            i++
         }
         if (temp.isNotEmpty()) {
             list.add(temp.toFloat())
